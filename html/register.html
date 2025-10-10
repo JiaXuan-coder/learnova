@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Management System Register Page</title>
+    <link rel="stylesheet" href="../css/register.css" />
+  </head>
+  <body>
+    <div class="logo">
+      <img src="../images/learnova_logo.png" alt="" />
+    </div>
+
+        <div class="container">
+            <!-- register form starts -->
+            <div class="form-box">
+                <form id="register-form", action="">
+                    <h2>Register now</h2>
+                    <select name="title" required>
+                        <option value="">-- Select title --</option>
+                        <option value="Ms">Ms</option>
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
+                    </select>
+                    <input type="text" name="firstname" placeholder="First name" required>
+                    <input type="text" name="lastname" placeholder="Last name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <select name="role" required>
+                        <option value="">-- Select Role --</option>
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                    </select>
+                    <button type="submit" name="register">Register</button>
+                    <p>Already have an account? <a href="../html/login.html">Log in</a></p>
+                </form>
+            </div>
+            <!-- register form ends -->
+        </div>
+
+        <script src="https://unpkg.com/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
+        <script src="../js/utils.js"></script>
+        <script src="../js/auth.js"></script>
+    </body>
+</html>

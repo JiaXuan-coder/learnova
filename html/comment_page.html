@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/comment_page.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_left,arrow_right,check" />
+  <title>Comment Page</title>
+</head>
+<body>
+    <h1>Comment</h1>
+    <div class="header-container">
+        <div >
+            <span>Lesson:&nbsp; </span>
+            <select name="classroom-lesson-filter" required>
+                <option value="">Loading lessons...</option>
+            </select>
+        </div>
+        <div class="teacher admin" style="display: flex; justify-content: flex-end; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 4px;">
+                <a id="previous_student" class="switch_student" onclick="">
+                <span class="material-symbols-sharp">arrow_left</span>
+                </a>
+                <span id="comment_student_name" style=" border: 1px solid #ccc;width: 200px;padding-left: 10px;margin-bottom: 5px;">
+                    Loading students...
+                </span>
+                <a id="next_student" class="switch_student" onclick="">
+                <span class="material-symbols-sharp">arrow_right</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="border: 2px solid #94bfd0; padding: 5px 12px; border-radius: 4px; height: 75vh; align-items: center;" class="gender-color-change-border">
+        <div style="padding-left: 10px; margin-bottom: 10px;"> Comment:&nbsp;
+        <textarea id="lesson_comment" style="height: 60vh;width:92vw;"></textarea></div>
+        <div style="padding-left: 10px; margin-bottom: 10px;display: flex;">
+        <span>Grade:&nbsp; </span>
+            <select name="lesson_grade_input" class="teacher admin" required>
+                <option value="pass">Pass</option>
+                <option value="failed">Failed</option>
+            </select>
+            <span id="lesson_grade_view" class="student">Not graded</span>
+            <button onclick="" class="submit-button teacher admin">
+                <span class ="material-symbols-sharp">check</span>&nbsp;&nbsp;Submit
+            </button>
+        </div>
+
+    </div>
+  <script src="../js/utils.js"></script>
+  <script src="../js/user.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/comment.js"></script>
+  <script>
+    // Initialize comment page when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeCommentPage();
+      setupRoleBasedVisibility();
+    });
+  </script>
+  </body>
+</html>

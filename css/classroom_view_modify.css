@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+/* Course related page stylesheet */
+:root {
+    --clr-blue-background: #94bfd0;
+    --clr-white-background: #eee;
+    --clr-black-text: #030304;
+    --clr-input-text: #ffffff74;
+    --clr-input-box: #d5e0e7f7;
+    --clr-box-shadow: rgba(0,0,0,0.2);
+    --clr-add-button: #94bfd0;
+    --clr-add-button-hover: #719fb2;
+    --clr-text-decoration: #4d35e7;
+    --clr-form-box: #aedeedf9;
+    --clr-publish-button: #7ddb86;
+    --clr-publish-button-hover: #69a765;
+    --clr-add-staff-button: #94bfd0;
+    --clr-add-staff-button-hover: #719fb2;
+    --clr-savedraft-button: #d3d3d3;
+    --clr-savedraft-button-hover: #a7a7a7;
+    --clr-archive-button: #ff7272;
+    --clr-archive-button-hover: #ff4e4e;
+}
+html, body {
+  height: 100%;   /* full page height */
+  margin: 0;      /* remove default spacing */
+}
+
+main {
+  display: flex;
+  flex-direction: column;  /* stack items vertically */
+  height: 75vh;            /* fill the page */
+}
+.header-container {
+  display: grid; /* Makes the container a grid container */
+  grid-template-columns: 1fr 1fr; /* Creates two equal columns */
+  gap: 20px; /* Adds space between grid items */
+  margin-bottom: 20px;
+}
+.grid-container2 {
+  display: grid; /* Makes the container a grid container */
+  grid-template-columns: 1fr 1fr; /* Creates two equal columns */
+  gap: 20px; /* Adds space between grid items */
+  height: 100%;
+}
+.grid-container2 > div {
+  flex: 1;                /* expand inner bordered box */
+  border: 2px solid black;
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* so its children align vertically */
+}
+.classroom-button-container {
+  display: grid; /* Makes the container a grid container */
+  grid-template-columns: 1fr 1fr 1fr; /* Creates two equal columns */
+  gap: 20px; /* Adds space between grid items */
+  margin-bottom: 20px;
+}
+/* Floating round button */
+.archive {    
+    background-color: var(--clr-archive-button);
+    bottom: 8%;          
+    right: 16%;  
+  }
+
+.archive:hover {
+background-color: var(--clr-archive-button-hover);
+}
+.publish {    
+    background-color: var(--clr-publish-button);
+    bottom: 8%;          
+    right: 4%;  
+  }
+
+.publish:hover {
+background-color: var(--clr-publish-button-hover);
+}
+.save {    
+    background-color: var(--clr-savedraft-button);
+    bottom: 8%;          
+    right: 22%;  
+}
+
+.save:hover {
+    background-color: var(--clr-savedraft-button-hover);
+}
+
+.cancel {    
+    background-color: var(--clr-archive-button);
+    bottom: 8%;          
+    right: 16%;  
+}
+
+.cancel:hover {
+background-color: var(--clr-archive-button-hover);
+}
+
+.delete {    
+    background-color: #dc3545;
+    bottom: 8%;          
+    right: 10%;  
+}
+
+.delete:hover {
+    background-color: #c82333;
+}
+
+.edit {    
+    background-color: var(--clr-add-staff-button);
+    bottom: 8%;          
+    right: 4%;  
+}
+
+.edit:hover {
+background-color: var(--clr-add-staff-button-hover);
+}
+.add { 
+    background-color: var(--clr-add-button);
+    bottom: 8%;          
+    right: 4%;  
+  }
+
+.add:hover {
+background-color: var(--clr-add-button-hover);
+}
+.classroom-right-top-button{
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;    
+    color: white;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+    background-color: var(--clr-blue-background);
+    
+}
+.classroom-right-top-button:hover{
+    box-shadow: 0 10px 12px rgba(0,0,0,0.3);
+}
+.add-item-btn {
+    width: 160px;
+    height: 40px;
+    border-radius: 10px;    
+    background-color: var(--clr-add-staff-button);
+    color: white;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+    
+}
+.add-item-btn:hover{
+    background-color: var(--clr-add-staff-button-hover);
+}
+.btn {
+    position: fixed;       /* Stay in place even on scroll */         
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;    
+    color: white;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+
+.popup {
+  display: none;               /* Hidden by default */
+  position: fixed;             /* Overlay on top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* Dark transparent background */
+  justify-content: center;     /* Center horizontally */
+  align-items: center;         /* Center vertically */
+  z-index: 9999;               /* Ensure it's above everything */
+}
+
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100vh;
+  height: 60vh;
+  max-width: 80%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}

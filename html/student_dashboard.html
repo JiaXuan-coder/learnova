@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add" />
+  <title>Student</title>
+</head>
+<body>
+  <!-- Main content -->
+  <main>
+    <h1>Student</h1>
+    <div>
+      <!-- student filter -->
+      <div class="student-filter-container">
+        <div class="student-course-filter-container">
+        <p>Courses: </p>
+          <select id="course-dropdown" name="student-course-filter" required>
+            <option value="all-courses">All courses</option>
+            <!--
+              const courses = get all courses 
+
+              const courseDropdown = document.getElementById('course-dropdown');
+
+              courses.forEach(course => {
+                let option = document.createElement('option')
+                option.value = course.code 
+                option.textContent = course.name 
+                courseDropdown.appendChild(option)
+              });
+            -->
+          </select>
+        </div>
+        <div class="student-classroom-filter-container">
+        <p>Classroom: </p>
+          <select id="classroom-dropdown" name="student-classroom-filter" required>
+            <option value="all-classes">All classes</option>
+            <!--
+              const classrooms = get all classroom 
+
+              const classroomDropdown = document.getElementById('classroom-dropdown');
+
+              classrooms.forEach(course => {
+                let option = document.createElement('option')
+                option.value = classrooms.code 
+                option.textContent = classrooms.name 
+                classroomDropdown.appendChild(option)
+              });
+            -->
+          </select> 
+        </div>
+      </div>
+
+      <!-- student display -->
+      <div id="students-container" class="students">
+        <!-- Students will be populated by JavaScript -->
+        
+        <!-- example display (viewing) -->
+        <!-- <div class="student-box gender-color-change">
+            <div class="student-name">Lim Kerk Yee</div>
+            <div class="student-email">limkerkyee@gmail.com</div>
+        </div>
+        <div class="student-box gender-color-change">
+            <div class="student-name">Ali Muthu</div>
+            <div class="student-email">alimuthu@gmail.com</div>
+        </div> -->
+
+        <!-- example display (attendance taking) -->
+        <!-- <div class="attendance student-box gender-color-change">
+          <div class="student-info">
+              <div class="student-name">Lim Kerk Yee</div>
+              <div class="student-email">limkerkyee@gmail.com</div>
+          </div>
+          <input type="checkbox" value="" name="attendance">
+        </div>
+        <div class="attendance student-box gender-color-change">
+          <div class="student-info">
+              <div class="student-name">Ali Muthu</div>
+              <div class="student-email">alimuthu@gmail.com</div>
+          </div>
+          <input type="checkbox" value="" name="attendance">
+        </div> -->
+
+      </div>
+
+    </div>
+  </main>
+  <!--main student section end-->
+  
+  
+  <script src="../js/utils.js"></script>
+  <script src="../js/user.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/student.js"></script>
+  <script>
+    // Initialize student dashboard when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeStudentDashboard();
+    });
+  </script>
+
+  <!-- <script>
+    // example gender colour display
+    // make user gender from registered account
+    // Create a new gender_color_change.js and link all files with same function
+    let userGender = "female";
+
+    const elementsToChangeColor = document.getElementsByClassName("gender-color-change");
+    const blue = "#94bfd0";
+    const pink = "#F2AEBB";
+
+    if (userGender == "female"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = pink; // change color
+      }
+    } else if (userGender == "male"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = blue; // change color
+      }
+    }
+  </script> -->
+
+</body>
+</html>

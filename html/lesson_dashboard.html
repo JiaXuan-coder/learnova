@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add" />
+  <title>Lesson</title>
+</head>
+<body>
+
+  <!-- main content -->
+  <main>
+    <h1>Lesson</h1>
+    <div>
+      <!-- lesson filter -->
+      <select name="lesson-filter" required>
+        <option value="created-by-me">Created by me</option>
+        <option value="all-lesson">All lesson</option>
+      </select>
+
+      <!-- lesson display -->
+      <div id="lesson-container" class="lessons">
+        <!-- 
+        const container = document.getElementById("lesson-container");
+
+        lesson.forEach(lesson => {
+          const box = document.createElement("div");
+          box.className = "lesson-box";
+
+          // Header (lesson title) row
+          const header = document.createElement("div");
+          header.className = "lesson-header";
+          header.innerHTML = `<span>Title: ${lesson.name}</span>`;
+
+          // Append to box
+          box.appendChild(header);\
+
+          box.addEventListener("click", () => {
+            onLessonClick(course); // Call your function
+          });
+
+          container.appendChild(box);
+        });
+
+        // run on click
+        function onLessonClick(course) {
+          get course code and pass it to next view for data retrieving, linking function loadContent('lesson_view.html')" to make it under side bar;
+        } -->
+      </div>
+      
+      <!-- add lesson button-->
+      <a onclick="loadContent('create_modify_lesson.html')" class="add btn teacher gender-color-change">
+        <span class ="material-symbols-outlined">add</span>
+      </a>
+    </div>
+    
+  </main>
+  <!--main lesson section end-->
+  
+  <script src="https://unpkg.com/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/user.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/lesson.js"></script>
+  <script>
+    // Initialize lesson dashboard when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      fetchLessons();
+    });
+  </script>
+  <div class="container">
+
+  <!-- <script>
+    // example gender colour display
+    // make user gender from registered account
+    // Create a new gender_color_change.js and link all files with same function
+    let userGender = "female";
+
+    const elementsToChangeColor = document.getElementsByClassName("gender-color-change");
+    const blue = "#94bfd0";
+    const pink = "#F2AEBB";
+
+    if (userGender == "female"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = pink; // change color
+      }
+    } else if (userGender == "male"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = blue; // change color
+      }
+    }
+  </script>
+     -->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<script>
+    // 1. Initialize Supabase and API Keys
+    const supabaseUrl = "https://ttisvmwrxnfbedrboizq.supabase.co";  
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0aXN2bXdyeG5mYmVkcmJvaXpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNTI0MzcsImV4cCI6MjA3MTgyODQzN30.oRd-R8i6bJRGvq27w9Fbwwf4JajGuivv95vYGU5eGtw";                     
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    // 2. Fetch data
+    async function fetchCourses() {
+      const { data, error } = await supabase
+        .from('course')
+        .select('*'); // fetch all rows and columns in Course table
+
+      if (error) {
+        document.getElementById("error").textContent = "Could not fetch the courses";
+        console.error(error);
+        return;
+      }
+
+      // 3. Render data into HTML
+      const coursesDiv = document.getElementById("courses");
+      coursesDiv.innerHTML = "";
+      
+      data.forEach(course => {
+        // Create a <div> (block) element to contain all course details
+        const div = document.createElement("div");
+
+        // CSS style
+        div.style.border = "1px solid #ccc";
+        div.style.margin = "10px";
+        div.style.padding = "10px";
+        div.innerHTML = `
+          <h2>${course.course_id || "Untitled Course"}</h2>
+          <p><strong>Description:</strong> ${course.course_desc || "No description"}</p>
+          <p><strong>Credit:</strong> ${course.course_credit || "Unknown"}</p>
+        `;
+
+        // Add the newly created course block to coursesDiv
+        coursesDiv.appendChild(div);
+      });
+    }
+
+    // 4. Run it when page loads
+    fetchCourses();
+  </script> -->

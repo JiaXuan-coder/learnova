@@ -1,0 +1,124 @@
+/* registration page additional stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+/* login page stylesheet */
+
+:root {
+    --clr-blue-background: #aadefc;
+    --clr-white-background: #eee;
+    --clr-black-text: #030304;
+    --clr-input-text: #ffffff74;
+    --clr-input-box: #d5e0e7f7;
+    --clr-box-shadow: rgba(0,0,0,0.2);
+    --clr-button: #a1d1e4;
+    --clr-button-hover: #698cdd;
+    --clr-text-decoration: #4d35e7;
+    --clr-form-box: #aedeedf9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--clr-blue-background);
+    color: var(--clr-black-text);
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+body .logo img {
+    margin-right: 500px;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100vh;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    background: var(--clr-white-background); 
+    box-shadow: 0 0 10px var(--clr-box-shadow);
+}
+
+
+.form-box {
+    width: 80%;
+    max-width: 400px;
+    background: var(--clr-white-background);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h2 {
+    font-size: 20px;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    background: var(--clr-input-box);
+    border-radius: 6px;
+    border: none;
+    overflow: none;
+    font-size: 16px;
+    color: #090707;
+    margin-bottom: 20px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #a1d1e4;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background: #698cdd;
+}
+
+p {
+    font-size: 14.5px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+p a {
+    text-decoration: none;
+    color: #4d35e7;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 800px){
+    .logo {
+        display: none;
+    }
+}
+
+
+
+
+
+
+

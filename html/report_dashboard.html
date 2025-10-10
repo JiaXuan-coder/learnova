@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add" />
+  <title>Report</title>
+</head>
+
+<body>
+
+    <!-- Main content -->
+    <main>
+    <h1>Report</h1>
+    <!-- for all span content, fetech the related data (also check mode is admin or teacher, if admin display data for whole system,
+    if teacher, display only data relaetd to teacher) -->
+    
+    <!-- Report related to student and teacher -->
+    <div id="student-teacher-report" class="report-box gender-color-change">
+        <p>Total student number: <span>xx</span></p>
+        <p class="admin">Total teacher number: <span>xx</span></p> <!-- only for admin! -->
+    </div>
+
+    <!-- Report related to lesson -->
+    <div id="lesson-report" class="report-box gender-color-change">
+        <p>Total lessons created: <span>xx</span></p>
+        <p>Total lessons published: <span>xx</span></p>
+        <p>Total lessons draft: <span>xx</span></p>
+        <p>Total lessons archive: <span>xx</span></p>
+        <p>Average credit number of lessons: <span>xx</span></p>
+    </div>
+
+    <!-- Report related to classroom -->
+    <div id="classroom-report" class="report-box gender-color-change">
+        <p>Total classroom created: <span>xx</span></p>
+        <p>Total classroom active: <span>xx</span></p>
+        <p>Total classroom completed: <span>xx</span></p>
+        <p>Average student per class: <span>xx</span></p>
+    </div>
+
+    <!-- Report related to course -->
+    <div id="course-report" class="report-box gender-color-change">
+        <p>Total course created: <span>xx</span></p>
+        <p>Total course active: <span>xx</span></p>
+        <p>Total course draft: <span>xx</span></p>
+        <p>Total course archive: <span>xx</span></p>
+        <p>Total credits has been offer: <span>xx</span></p>
+        <p>Average lesson per course: <span>xx</span></p>
+        <p>Average course completion in percentage: <span>xx</span>%</p>
+    </div>
+
+    </main>
+    <!-- Main content end-->
+
+</body>
+
+<!-- <script>
+    // example gender colour display
+    // make user gender from registered account
+    // Create a new gender_color_change.js and link all files with same function
+    let userGender = "female";
+
+    const elementsToChangeColor = document.getElementsByClassName("gender-color-change");
+    const blue = "#94bfd0";
+    const pink = "#F2AEBB";
+
+    if (userGender == "female"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = pink; // change color
+      }
+    } else if (userGender == "male"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = blue; // change color
+      }
+    }
+  </script> -->
+
+</html>

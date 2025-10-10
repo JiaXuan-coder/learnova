@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add" />
+  <title>Classroom</title>
+</head>
+<body>
+    <!-- Main content -->
+    <main>
+        <h1>Classroom</h1>
+        <div>
+            <!-- classroom display -->
+            <div id="classrooms-container" class="classrooms">
+                <!-- Classrooms will be populated by JavaScript -->
+            </div>
+            
+
+            
+            <!-- add classroom button for teacher (display if mode is teacher)-->
+            <a id="teacher-create-btn" onclick="showCreateClassroomModal()" class="add btn teacher gender-color-change">
+                <span class ="material-symbols-outlined">add</span>
+            </a>
+
+            <!-- enroll classroom button for student (display if mode is student)-->  
+            <a id="student-enroll-btn" onclick="showEnrollClassroomModal()" class="add btn student gender-color-change">
+                <span class ="material-symbols-outlined">person_add</span>
+                <span style="margin-left: 5px;">Enroll Classroom</span>
+            </a>
+
+        </div>
+    </main>
+    <!--main classroom section end-->
+
+    <!-- Popup container for enrolling classroom for student (after student click on the "add button")-->
+    <div id="popupenrollclassroom" class="popup" style="display: none">
+        <div class="popup-content">
+            <span class="close" onclick="document.getElementById('popupenrollclassroom').style.display = 'none'">&times;</span>
+            <h2>Select Classroom to Enroll</h2>
+            <div class="classrooms-container">
+                <!-- Classrooms will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup container for creating classroom for teacher -->
+    <div id="popupcreateclassroom" class="popup" style="display: none">
+        <div class="popup-content">
+            <span class="close" onclick="document.getElementById('popupcreateclassroom').style.display = 'none'">&times;</span>
+            <h2>Create New Classroom</h2>
+            <form id="create-classroom-form">
+                <div style="margin: 10px 0;">
+                    <label for="classroom-name-input">Classroom Name:</label>
+                    <input type="text" id="classroom-name-input" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                </div>
+                <div style="margin: 10px 0;">
+                    <label for="classroom-supervisor-input">Supervisor:</label>
+                    <select id="classroom-supervisor-input" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                        <option value="">Select a supervisor...</option>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 20px;">
+                    <button type="submit" class="btn" style="background-color: #4CAF50; color: white;">Create Classroom</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  
+  <script src="../js/utils.js"></script>
+  <script src="../js/user.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/classroom.js"></script>
+  <script>
+    // Initialize classroom dashboard when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      fetchClassrooms();
+      setupClassroomModals();
+    });
+  </script>
+
+  <!-- <script>
+    // example gender colour display
+    // make user gender from registered account
+    // Create a new gender_color_change.js and link all files with same function
+    let userGender = "female";
+
+    const elementsToChangeColor = document.getElementsByClassName("gender-color-change");
+    const blue = "#94bfd0";
+    const pink = "#F2AEBB";
+
+    if (userGender == "female"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = pink; // change color
+      }
+    } else if (userGender == "male"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = blue; // change color
+      }
+    }
+  </script> -->
+
+</body>
+</html>

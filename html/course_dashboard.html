@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add" />
+  <title>Course</title>
+</head>
+<body>
+  <!-- Main content -->
+  <main>
+    <h1>Course</h1>
+    <div>
+      <!-- course display -->
+      <div id="courses-container" class="courses">
+        <!-- 
+        const container = document.getElementById("courses-container");
+
+        courses.forEach(course => {
+          const box = document.createElement("div");
+          box.className = "course-box";
+
+          // Header row
+          const header = document.createElement("div");
+          header.className = "course-header";
+          header.innerHTML = `<span>ID: ${course.id}</span><span>Title: ${course.name}</span>`;
+
+          // Owner row
+          const owner = document.createElement("div");
+          owner.className = "course-owner";
+          owner.textContent = `Owner: ${course.owner}`;
+
+        // Status row
+          const status = document.createElement("div");
+          owner.className = "course-status";
+          owner.textContent = `Owner: ${course.status}`;
+
+          // Append to box
+          box.appendChild(header);
+          box.appendChild(owner);
+          box.appendChild(status);
+
+          box.addEventListener("click", () => {
+            onCourseClick(course); // Call your function
+          });
+
+          container.appendChild(box);
+        });
+
+        // run on click
+        function onCourseClick(course) {
+          // Store course data for the course view
+          sessionStorage.setItem("selected_course", JSON.stringify(course));
+          loadContent('course_view.html');
+        } -->
+      </div>
+      <!-- <a style="text-decoration: underline;"onclick="loadContent('course_view.html')" class="teacher">
+        Click to jump Example class view page
+      </a> -->
+      <!-- add course button-->
+      <a onclick="loadContent('create_modify_course.html')" class="add btn teacher">
+        <span class ="material-symbols-outlined">add</span>
+      </a>
+    </div>
+  </main>
+<!--main lesson section end-->
+  
+  <script src="https://unpkg.com/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/user.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/course.js"></script>
+  <script>
+    // Initialize course dashboard when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      fetchCourses();
+    });
+  </script>
+</body>
+</html>

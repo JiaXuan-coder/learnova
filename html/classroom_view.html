@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/classroom_view_modify.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,edit,change_circle,check_box,group,checkbook,arrow_forward" />
+  <title>Classroom View</title>
+</head>
+<!-- <style>
+  .student {
+    display: none !important;
+  }
+  .view{
+    display: none;
+  }
+  .create{
+    display: none;
+  }
+  .modify{
+    display: flex;
+  }
+</style> -->
+<body>
+  <!-- Main content -->
+  <main>
+    <div class="header-container">
+      <h1 id="course_id_and_classroom_id" class="modify view" style="display: none;">Classroom</h1>
+      <div id="course-selection-container" style="display: flex;"> 
+        <div class="view" style="display: flex;">
+            <span>Course:&nbsp; </span>
+            <span id="assigned-course-name">Not assigned</span>
+        </div>
+        <div id="course-picker-container" class="modify" style="display: none; visibility: hidden;">
+            <span>Course:&nbsp; </span>
+            <select id="classroom-course-filter" name="classroom-course-filter" required style="width: 200px;">
+                <option value="">Select Course</option>
+            </select>
+        </div>
+      </div>
+      
+      <!-- Classroom Name -->
+      <div id="classroom-name-container" style="display: flex;">
+        <div class="view" style="display: flex;">
+            <span>Name:&nbsp; </span>
+            <span id="classroom-name-display">testing class</span>
+        </div>
+        <div id="classroom-name-input-container" class="modify" style="display: none; visibility: hidden;">
+            <span>Name:&nbsp; </span>
+            <input id="classroom-name-input" type="text" value="testing class" style="width: 200px;">
+        </div>
+      </div>
+      
+      <div class="classroom-button-container teacher admin">
+        <button onclick="navigateToStudentDashboard('attendance')" class="classroom-right-top-button" style="background-color: #E4BA2F;">
+          <span class ="material-symbols-sharp">check_box</span>&nbsp;&nbsp;Mark Attendance
+        </button>
+        <button onclick="navigateToCommentPage()" class="classroom-right-top-button" style="background-color: #2FE438;">
+          <span class ="material-symbols-sharp">checkbook</span>&nbsp;&nbsp;Give Comment
+        </button>
+        <button onclick="navigateToStudentDashboard('view')" class="classroom-right-top-button gender-color-change-background">
+          <span class ="material-symbols-sharp">group</span>&nbsp;&nbsp;Student List
+        </button>
+      </div>
+      <div class="classroom-button-container student" style="display: none;">
+        <div></div>
+        <div></div>
+        <button onclick="navigateToCommentPage()" class="classroom-right-top-button" style="background-color: #2FE438;">
+          <span class ="material-symbols-sharp">checkbook</span>&nbsp;&nbsp;View Comment
+        </button>
+      </div>
+    </div>
+    <!-- Main view -->
+    <div style="height: 100%;">        
+        <div class="grid-container2">
+            <!-- Placeholder for classroom info -->
+            <div style="border: 2px solid black; padding: 10px;">
+                <!-- 
+                <p>Description:</p><span id="course-desc"></span> <textarea id="course-desc-input" style="height: 20vh" placeholder=""></textarea> -->
+                <p><b>Supervisor:</b></p>
+                <div id="classroom-staff-container" class="classroom-staff"> </div>
+                <div style="display: flex; justify-content: center;margin: 5px 5px">
+                  <button onclick="document.getElementById('popupstaff').style.display = 'flex'" class="add-item-btn modify gender-color-change-background gender-color-change-background-hover" style="display: none; visibility: hidden;">
+                    <span class ="material-symbols-sharp">change_circle</span>&nbsp;&nbsp;Change
+                  </button>
+                </div>
+                <p><b>Start date:</b></p>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span id="start-date" class="view" style="display:flex;"></span> 
+                  <input id="start-date-input" class="modify" type="date" style="display: none; visibility: hidden;">
+                </div>
+                <p><b>Duration:</b></p>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span id="duration" class="view" style="display:flex;"></span> 
+                  <select id="duration-input" class="modify" name="duration-input" required style="display: none; visibility: hidden;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                  <p> week(s)</p>
+                </div>
+                <!-- 
+                <<Optional>>
+                <p><b>Webinar Link:</b></p>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span id="classroom-link" class="view" style="display:flex;"></span> 
+                  <input id="classroom-link-input" class="modify create" type="text" style="display: none;">
+                </div>
+                <p><b>Class date:</b></p>
+                <div id="class-date-display">
+                </div> -->
+            </div>
+            <!-- Placeholder for display lessons -->
+            <div style="border: 0px;" >
+                <div id="lessons-container" class="lessons"></div>
+                <div style="display: flex; justify-content: center;margin: 5px 5px;">
+                  <button onclick="document.getElementById('popuplesson').style.display = 'flex'" class="add-item-btn modify gender-color-change-background gender-color-change-background-hover" style="display: none; visibility: hidden;"><span class ="material-symbols-sharp">add</span>&nbsp;&nbsp;Add Lesson</button></div>
+            </div>
+        </div>
+
+        
+        <!-- Save and Cancel buttons for edit mode -->
+        <button class="save btn teacher admin modify" style="display: none; visibility: hidden;">
+            <span class ="material-symbols-sharp">save</span>
+        </button>
+        <button class="cancel btn teacher admin modify" style="display: none; visibility: hidden;">
+            <span class ="material-symbols-sharp">close</span>
+        </button>
+        <button class="delete btn teacher admin modify" style="display: none; visibility: hidden;">
+            <span class ="material-symbols-sharp">delete</span>
+        </button>
+        <a class="add btn teacher admin view" style="display: flex; visibility: visible;">
+          <span class ="material-symbols-sharp">edit</span>
+        </a>
+        <a onclick="loadContent('student_dashboard.html')" class="add btn teacher admin create" style="display: none; visibility: hidden;">
+          <span class ="material-symbols-sharp">arrow_forward</span>
+        </a>
+    </div>
+    
+    </main>
+    <!--main lesson section end-->
+    <!-- Popup container for adding lesson-->
+    <div id="popuplesson" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="document.getElementById('popuplesson').style.display = 'none'">&times;</span>
+            <h2>Add Lessons</h2>
+            <div id="addable-lesson-container" class="addable-lesson-list"></div>
+            <div style="display: flex; justify-content: center;margin: 5px 5px;"><button id="course-add-lesson" class="add-item-btn gender-color-change-background gender-color-change-background-hover" onclick="assignSelectedLessonsToClassroom(); document.getElementById('popuplesson').style.display = 'none'"><span class ="material-symbols-sharp">add</span>&nbsp;&nbsp;Add Lesson</button></div>
+        </div>
+    </div>
+  <script src="../js/utils.js"></script>
+  <script src="../js/user.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/classroom.js"></script>
+  <script>
+    // Initialize classroom view when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeClassroomViewFromMain();
+      setupClassroomModals();
+    });
+  </script>
+  </body>
+</html>

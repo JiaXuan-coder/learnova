@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/lesson.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=publish" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=badge" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=draft" />
+  <title>Learnova</title>
+</head>
+<body>
+
+  <!-- main section start -->
+  <main>
+    <h1>Create lesson</h1>
+
+    <!-- Main view -->
+    <div style="height: 100%;">
+        
+        <!-- Placeholder for lesson name -->
+        <div class="lesson-name">
+            <input id="lesson-name-input" type="text" placeholder="Lesson name">
+        </div>
+
+        <!-- Lesson ID input -->
+        <div class="lesson-id">
+            <h2 class="gender-color-change">Lesson ID</h2>
+            <input id="lesson-id-input" type="text" placeholder="Enter lesson ID (e.g., FIT2101-L01)" required>
+        </div>
+
+
+        <!-- lesson outcome -->
+        <div class="lesson-outcome">
+            <h2 class="gender-color-change">Lesson outcome</h2>
+            <textarea id="lesson-outcome-input" style="height: 20vh" placeholder="Software development methodology...."></textarea>
+        </div>
+
+        <!-- lesson description -->
+        <div class="description">
+            <h2 class="gender-color-change">Description</h2>
+            <textarea id="description-input" style="height: 20vh" placeholder="Software development methodology...."></textarea>
+        </div>
+
+        <div class="prerequisite-credit-effort-container">
+            <!-- dropdown for prerequisite lessons -->
+            <p>Prerequisite lessons: </p>
+            <select id="prerequisite-lessons" name="prerequisite-lessons">
+                <option value="">No prerequisites</option>
+            </select>
+
+            <!-- dropdown for lessons credit -->
+            <p>Lesson credit: </p>
+            <select id="lesson-credit" name="lesson-credit" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+
+            <!-- dropdown for effort per week -->
+            <p>Estimated hours of effort per week: </p>
+            <select id="lesson-estimated-effort" name="lesson-estimated-effort" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+
+        <!-- lesson reading list -->
+        <div class="reading-list">
+            <h2 class="gender-color-change">Reading list</h2>
+            <!-- Placeholder for display reading list-->
+            <div style="border: 2px solid black;"> 
+                <div id="addable-reading-list-container" class="reading-list"></div>
+                <div style="display: flex; justify-content: center;margin: 5px 5px;">
+                    <button onclick="document.getElementById('popupreadinglist').style.display = 'flex'" class="lesson-add-reading-list"><span class ="material-symbols-sharp">add</span>&nbsp;&nbsp;Add Reading List</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- lesson assignment -->
+        <div class="assignment">
+            <h2 class="gender-color-change">Assignment</h2>
+            <!-- Placeholder for display lesson assignment-->
+            <div style="border: 2px solid black; padding: 10px;">
+                <div id="addable-assignment-container" class="assignment"></div>
+                <div style="display: flex; justify-content: center;margin: 5px 5px;">
+                    <button onclick="document.getElementById('popupassignment').style.display = 'flex'" class="lesson-add-assignment"><span class ="material-symbols-sharp">add</span>&nbsp;&nbsp;Add Assignment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Archieve, save draft and publish button -->
+         <a onclick="loadContent('course_dashboard.html')" class="archive btn teacher">
+            <span class ="material-symbols-sharp">archive</span>
+        </a>
+        <a onclick="loadContent('course_dashboard.html')" class="publish btn teacher">
+            <span class ="material-symbols-sharp">publish</span>
+        </a>
+        <a onclick="loadContent('course_dashboard.html')" class="savedraft btn teacher">
+            <span class ="material-symbols-sharp">draft</span>
+        </a>
+       
+    </div>
+    
+    </main>
+    <!--main section end-->
+
+    <!-- Popup container for adding reading list-->
+    <div id="popupreadinglist" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="document.getElementById('popupreadinglist').style.display = 'none'">&times;</span>
+            <h2 class="gender-color-change">New Reading List</h2>
+
+            <div class="reading-list-title">
+                <h3>Title: </h3>
+                <input  id="reading-list-title-input" type="text" placeholder="Reading list title">
+            </div>
+
+            <div class="reading-list-content">
+                <h3>Content: </h3>
+                <textarea id="reading-list-content-input" style="height: 20vh" placeholder="Reading list content"></textarea>
+            </div>
+
+            <div>
+                <div style="display: flex; justify-content: center;margin: 5px 5px;">
+                    <button onclick="addReadingListToLesson()" class="add-item-btn gender-color-change"><span class ="material-symbols-sharp">add</span>&nbsp;&nbsp;Add Reading List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Popup container for adding assignment-->
+    <div id="popupassignment" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="document.getElementById('popupassignment').style.display = 'none'">&times;</span>
+            <h2  class="gender-color-change">New Assignment</h2>
+
+            <div class="assignment-title">
+                <h3>Title: </h3>
+                <input id="assignment-title-input" type="text" placeholder="Assignment title">
+            </div>
+
+            <div class="assignment-content">
+                <h3>Content: </h3>
+                <textarea id="assignment-content-input" style="height: 20vh" placeholder="Assignment content"></textarea>
+            </div>
+
+            <div>
+                <div style="display: flex; justify-content: center;margin: 5px 5px;">
+                    <button onclick="addAssignmentToLesson()" class="add-item-btn gender-color-change"><span class ="material-symbols-sharp">add</span>&nbsp;&nbsp;Add Assignment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/user.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/lesson.js"></script>
+
+    <!-- <script>
+    // example gender colour display
+    // make user gender from registered account
+    // Create a new gender_color_change.js and link all files with same function
+    let userGender = "female";
+
+    const elementsToChangeColor = document.getElementsByClassName("gender-color-change");
+    const blue = "#94bfd0";
+    const pink = "#F2AEBB";
+
+    if (userGender == "female"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = pink; // change color
+      }
+    } else if (userGender == "male"){
+      for (let i = 0; i < elementsToChangeColor.length; i++) {
+        elementsToChangeColor[i].style.backgroundColor = blue; // change color
+      }
+    }
+  </script> -->
+</body>
+</html>

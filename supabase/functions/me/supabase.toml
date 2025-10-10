@@ -1,0 +1,2 @@
+[functions.me]
+verify_jwt = true  # requires a valid access token

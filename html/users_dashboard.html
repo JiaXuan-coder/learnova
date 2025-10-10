@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add" />
+    <title>Users</title>
+</head>
+
+<body>
+
+    <!-- Main content -->
+    <main>
+    <h1>Users</h1>
+    <div>
+        <!-- user filter -->
+        <select id="user-filter" required>
+            <option value="all-teacher">Teacher</option>
+            <option value="all-student">Student</option>
+        </select>
+
+        <!-- teacher display -->
+        <div id="teachers-container" class="teachers" style="display: block">
+            <!-- fetch all existing teacher account to be displayed here -->
+            <!-- example display -->
+            <div class="teacher-box gender-color-change">
+                <div class="teacher-name">Miss PuiMi</div>
+                <div class="teacher-email">puimee@gmail.com</div>
+            </div>
+            <div class="teacher-box gender-color-change">
+                <div class="teacher-name">Miss Mogana</div>
+                <div class="teacher-email">mogona@gmail.com</div>
+            </div>
+        </div> 
+
+        <!-- student display -->
+        <div id="students-container" class="students" style="display: none">
+            <!-- fetch all existing student account to be displayed here -->
+            <!-- example display -->
+            <div class="student-box gender-color-change">
+                <div class="student-name">Lim Kerk Yee</div>
+                <div class="student-email">limkerkyee@gmail.com</div>
+            </div>
+            <div class="student-box gender-color-change">
+                <div class="student-name">Ali Muthu</div>
+                <div class="student-email">alimuthu@gmail.com</div>
+            </div>
+        </div>
+
+        <!-- floating "delete user" button -->
+        <button onclick="openDeletePopup()" class="delete-user-button">
+            <span>Delete user</span>
+        </button>
+    </div>
+
+    </main>
+    <!-- Main content end-->
+
+    <!-- Popup container for deleting user (teacher / student)-->
+    <div id="popupdeleteuser" class="popup" style="display: none">
+        <div class="popup-content">
+            <span class="close" onclick="document.getElementById('popupdeleteuser').style.display = 'none'">&times;</span>
+            
+            <!-- span content will be what is selected in dropdown above before popup appears -->
+            <h2>Delete user (<span id="popup-user-type">teacher / student</span>)</h2>
+            
+
+            <!-- teacher delete list -->
+            <div id="deleteable-teachers" class="deleteable-user-container" style="display: block">
+                <!-- fetch all existing teacher account to be displayed here -->
+                <!-- example display -->
+                <div class="delete user-box gender-color-change">
+                    <div class="user-info">
+                        <div class="teacher-name">Miss PuiMi</div>
+                        <div class="teacher-email">puimee@gmail.com</div>
+                    </div>
+                   <input type="checkbox" name="delete-user" value=""> <!--  value = teacher's id -->
+                </div>
+                <div class="delete user-box gender-color-change">
+                    <div class="user-info">
+                        <div class="teacher-name">Miss Mogana</div>
+                        <div class="teacher-email">mogona@gmail.com</div>
+                    </div>
+                    <input type="checkbox" name="delete-user" value=""> <!--  value = teacher's id -->
+                </div>
+            </div>
+
+            <!-- student delete list -->
+            <div id="deleteable-students" class="deleteable-user-container" style="display: none">
+                <!-- fetch all existing student account to be displayed here -->
+                <!-- example display -->
+                <div class="delete user-box gender-color-change">
+                    <div class="user-info">
+                        <div class="student-name">Lim Kerk Yee</div>
+                        <div class="student-email">limkerkyee@gmail.com</div>
+                    </div>
+                    <input type="checkbox" name="delete-user" value=""> <!--  value = student's id -->
+                </div>
+                <div class="delete user-box gender-color-change">
+                    <div class="user-info">
+                        <div class="student-name">Ali Muthu</div>
+                        <div class="student-email">alimuthu@gmail.com</div>
+                    </div>
+                    <input type="checkbox" name="delete-user" value=""> <!--  value = student's id -->
+                </div>
+            </div>
+
+            <!-- delete selected users button -->
+            <div style="display: flex; justify-content: center;margin: 5px 5px;">
+                <button class="delete-user-button-popup" onclick="document.getElementById('popupdeleteuser').style.display = 'none'">
+                    <span>Delete users</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // logic for admin selecting teacher / student in dropdown
+        const filter = document.getElementById("user-filter");
+        const teacherContainer = document.getElementById("teachers-container");
+        const studentContainer = document.getElementById("students-container");
+
+        filter.addEventListener("change", () => {
+            if (filter.value == "all-teacher"){
+                teacherContainer.style.display = "block";
+                studentContainer.style.display = "none";
+            } else if (filter.value == "all-student") {
+                teacherContainer.style.display = "none";
+                studentContainer.style.display = "block";
+            }
+        });
+
+        // logic for displaying popup (teacher / student based on previously selected in dropdown)
+        const popupFilter = document.getElementById("user-filter");
+        const popup = document.getElementById("popupdeleteuser")
+        const popupUserType = document.getElementById("popup-user-type")
+        const popupTeacherContainer = document.getElementById("deleteable-teachers");
+        const popupStudentContainer = document.getElementById("deleteable-students");
+
+        function openDeletePopup(){
+            popup.style.display = "flex";
+            if (popupFilter.value == "all-teacher"){
+                popupUserType.textContent = "Teacher";
+                popupStudentContainer.style.display = "none";
+                popupTeacherContainer.style.display = "block";
+            } else {
+                popupUserType.textContent = "Student";
+                popupStudentContainer.style.display = "block";
+                popupTeacherContainer.style.display = "none";
+            }
+        }
+
+    </script>
+
+    <!-- <script>
+        // example gender colour display
+        // make user gender from registered account
+        // Create a new gender_color_change.js and link all files with same function
+        let userGender = "female";
+
+        const elementsToChangeColor = document.getElementsByClassName("gender-color-change");
+        const blue = "#94bfd0";
+        const pink = "#F2AEBB";
+
+        if (userGender == "female"){
+        for (let i = 0; i < elementsToChangeColor.length; i++) {
+            elementsToChangeColor[i].style.backgroundColor = pink; // change color
+        }
+        } else if (userGender == "male"){
+        for (let i = 0; i < elementsToChangeColor.length; i++) {
+            elementsToChangeColor[i].style.backgroundColor = blue; // change color
+        }
+        }
+    </script> -->
+
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/course.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,edit" />
+  <title>Course View</title>
+</head>
+<body>
+  <!-- Main content -->
+  <main>
+    <h1 id="course-title">Course Details</h1>
+    <div class="student progress-wrapper">
+      <strong>Progress:</strong>
+      <div class="progress-container">
+        <div id="calculated-progress" class="progress-bar gender-color-change-background">50%</div>
+      </div>
+    </div>
+    <div class="course-details">
+      <div class="course-info">
+        <h2>Course Information</h2>
+        <div id="course-info-content">
+          <!-- Course details will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <div class="course-lessons">
+        <h2>Lessons</h2>
+        <div id="course-lessons-container" class="lessons">
+          <!-- Lessons will be populated by JavaScript -->
+        </div>
+        <div style="display: flex; justify-content: center; margin: 10px;">
+          <button id="add-lesson-btn" onclick="addLessonToCourse()" class="add-item-btn teacher admin gender-color-change-background" style="display: none;">
+            <span class="material-symbols-outlined">add</span>&nbsp;&nbsp;Add Lesson
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div style="display: flex; justify-content: center; margin: 20px;">
+      <button onclick="loadContent('course_dashboard.html')" class="btn">
+        Back to Courses
+      </button>
+    </div>
+    
+    <!-- Edit course button (same position as create button) -->
+    <a id="course-edit-toggle" class="add btn teacher admin" style="position: fixed !important; bottom: 8% !important; right: 4% !important; width: 60px !important; height: 60px !important; border-radius: 50% !important; background-color: #2196F3 !important; opacity: 1 !important; cursor: pointer; color: white !important; border: none !important; font-size: 30px !important; box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important; display: flex !important; align-items: center !important; justify-content: center !important;">
+      <span class="material-symbols-outlined">edit</span>
+    </a>
+    
+    <!-- Edit controls (initially hidden) -->
+    <div id="course-edit-controls" style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+      <button id="course-save-btn" class="btn" style="background-color: #4CAF50; color: white; border: none; padding: 8px 16px; border-radius: 3px; margin-right: 10px; cursor: pointer;">Save</button>
+      <button id="course-delete-btn" class="btn" style="background-color: #f44336; color: white; border: none; padding: 8px 16px; border-radius: 3px; margin-right: 10px; cursor: pointer;">Delete</button>
+      <button id="course-cancel-btn" class="btn" style="background-color: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 3px; cursor: pointer;">Cancel</button>
+    </div>
+  </main>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/user.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/course.js"></script>
+  <script>
+    // Initialize course view with a small delay to ensure DOM elements are available
+    // (since this content is loaded dynamically, DOMContentLoaded won't fire)
+    console.log("Course view script loaded");
+    setTimeout(() => {
+      console.log("Course view setTimeout executed");
+      initializeCourseView();
+    }, 100);
+
+    function initializeCourseView() {
+      console.log("initializeCourseView called");
+      const selectedCourse = sessionStorage.getItem("selected_course");
+      console.log("Selected course from session storage:", selectedCourse);
+      
+      if (selectedCourse) {
+        const course = JSON.parse(selectedCourse);
+        console.log("Parsed course:", course);
+        displayCourseDetails(course);
+        fetchLessonsForCourse(course.course_id);
+      } else {
+        console.log("No course selected in session storage");
+        const infoElement = document.getElementById("course-info-content");
+        if (infoElement) {
+          infoElement.innerHTML = "<p>No course selected. Please go back to the course dashboard.</p>";
+        } else {
+          console.error("Element #course-info-content not found");
+        }
+      }
+    }
+
+    function displayCourseDetails(course) {
+      const titleElement = document.getElementById("course-title");
+      const infoElement = document.getElementById("course-info-content");
+      
+      if (titleElement) {
+        titleElement.textContent = course.course_name || "Course Details";
+      }
+      
+      if (infoElement) {
+        infoElement.innerHTML = `
+          <div class="course-detail-item">
+            <strong>Course ID:</strong> ${course.course_id || 'N/A'}
+          </div>
+          <div class="course-detail-item">
+            <strong>Course Name:</strong> <span id="course-name-display">${course.course_name || 'N/A'}</span>
+          </div>
+          <div class="course-detail-item">
+            <strong>Credits:</strong> <span id="course-credit-display">${course.course_credit > 0 ? course.course_credit : '-'}</span>
+          </div>
+          <div class="course-detail-item">
+            <strong>Created by:</strong> ${course.teacher?.teacher_name || 'Unknown'}
+          </div>
+          <div class="course-detail-item">
+            <strong>Created on:</strong> ${new Date(course.created_at).toLocaleDateString()}
+          </div>
+          <div class="course-description-section">
+            <h3>Course Description</h3>
+            <div class="course-description-content gender-color-change-border-left" id="course-description-display">
+              ${course.course_description || 'No description available for this course.'}
+            </div>
+          </div>
+        `;
+      }
+
+      // Set up edit functionality
+      setupCourseEditControls(course);
+    }
+
+    function setupCourseEditControls(course) {
+      const editToggle = document.getElementById('course-edit-toggle');
+      const editControls = document.getElementById('course-edit-controls');
+      const saveBtn = document.getElementById('course-save-btn');
+      const deleteBtn = document.getElementById('course-delete-btn');
+      const cancelBtn = document.getElementById('course-cancel-btn');
+
+      console.log('Setting up course edit controls:', {
+        editToggle: !!editToggle,
+        editControls: !!editControls,
+        saveBtn: !!saveBtn,
+        deleteBtn: !!deleteBtn,
+        cancelBtn: !!cancelBtn
+      });
+
+      if (!editToggle || !editControls || !saveBtn || !deleteBtn || !cancelBtn) {
+        console.error('Could not find all required elements for course edit controls');
+        return;
+      }
+
+      let isEditing = false;
+      let originalValues = {
+        course_name: course.course_name,
+        course_description: course.course_description,
+        course_credit: course.course_credit
+      };
+
+      editToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Edit toggle clicked, isEditing:', isEditing);
+        if (!isEditing) {
+          // Enter edit mode
+          isEditing = true;
+          editToggle.style.display = 'none';
+          editControls.style.display = 'block';
+          makeCourseViewEditable(course);
+        }
+      });
+
+      saveBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        console.log('Save button clicked');
+        await saveCourseViewChanges(course);
+        isEditing = false;
+        editToggle.style.display = 'block';
+        editControls.style.display = 'none';
+        makeCourseViewReadOnly(originalValues);
+      });
+
+      cancelBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Cancel button clicked');
+        isEditing = false;
+        editToggle.style.display = 'block';
+        editControls.style.display = 'none';
+        makeCourseViewReadOnly(originalValues);
+      });
+
+      deleteBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        console.log('Delete button clicked');
+        await deleteCourseFromView(course);
+      });
+    }
+
+    function makeCourseViewEditable(course) {
+      const titleElement = document.getElementById('course-title');
+      const nameDisplay = document.getElementById('course-name-display');
+      const creditDisplay = document.getElementById('course-credit-display');
+      const descriptionDisplay = document.getElementById('course-description-display');
+
+      // Make course title editable
+      if (titleElement) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = course.course_name;
+        input.style.border = '1px solid #ccc';
+        input.style.padding = '8px 12px';
+        input.style.borderRadius = '5px';
+        input.style.width = '300px';
+        input.style.fontSize = '24px';
+        input.style.fontWeight = 'bold';
+        input.id = 'course-title-input';
+        titleElement.innerHTML = '';
+        titleElement.appendChild(input);
+      }
+
+      // Make course name editable
+      if (nameDisplay) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = course.course_name;
+        input.style.border = '1px solid #ccc';
+        input.style.padding = '2px 5px';
+        input.style.borderRadius = '3px';
+        input.style.width = '200px';
+        input.id = 'course-name-input';
+        nameDisplay.innerHTML = '';
+        nameDisplay.appendChild(input);
+      }
+
+      // Make credit editable
+      if (creditDisplay) {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.value = course.course_credit;
+        input.style.border = '1px solid #ccc';
+        input.style.padding = '2px 5px';
+        input.style.borderRadius = '3px';
+        input.style.width = '80px';
+        input.id = 'course-credit-input';
+        creditDisplay.innerHTML = '';
+        creditDisplay.appendChild(input);
+      }
+
+      // Make description editable
+      if (descriptionDisplay) {
+        const textarea = document.createElement('textarea');
+        textarea.value = course.course_description || '';
+        textarea.style.border = '1px solid #ccc';
+        textarea.style.padding = '5px';
+        textarea.style.borderRadius = '3px';
+        textarea.style.width = '100%';
+        textarea.style.height = '100px';
+        textarea.style.resize = 'vertical';
+        textarea.id = 'course-description-input';
+        descriptionDisplay.innerHTML = '';
+        descriptionDisplay.appendChild(textarea);
+      }
+    }
+
+    function makeCourseViewReadOnly(originalValues) {
+      const titleElement = document.getElementById('course-title');
+      const nameDisplay = document.getElementById('course-name-display');
+      const creditDisplay = document.getElementById('course-credit-display');
+      const descriptionDisplay = document.getElementById('course-description-display');
+
+      if (titleElement) {
+        titleElement.textContent = originalValues.course_name || 'Course Details';
+      }
+      if (nameDisplay) {
+        nameDisplay.textContent = originalValues.course_name || 'N/A';
+      }
+      if (creditDisplay) {
+        creditDisplay.textContent = originalValues.course_credit || 0;
+      }
+      if (descriptionDisplay) {
+        descriptionDisplay.textContent = originalValues.course_description || 'No description available for this course.';
+      }
+    }
+
+    async function saveCourseViewChanges(course) {
+      const token = sessionStorage.getItem("access_token");
+      if (!token) {
+        alert("Please log in to save changes");
+        return;
+      }
+
+      const titleInput = document.getElementById('course-title-input');
+      const nameInput = document.getElementById('course-name-input');
+      const creditInput = document.getElementById('course-credit-input');
+      const descriptionInput = document.getElementById('course-description-input');
+
+      const updatedData = {
+        course_name: titleInput ? titleInput.value.trim() : course.course_name,
+        course_description: descriptionInput ? descriptionInput.value.trim() : course.course_description,
+        course_credit: creditInput ? parseInt(creditInput.value) || 0 : course.course_credit
+      };
+
+      // Check if anything actually changed
+      const hasChanges = 
+        updatedData.course_name !== course.course_name ||
+        updatedData.course_description !== course.course_description ||
+        updatedData.course_credit !== course.course_credit;
+
+      if (!hasChanges) {
+        alert("No changes to save");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/courses/${course.course_id}`, {
+          method: "PUT",
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedData)
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || `HTTP error! status: ${res.status}`);
+        }
+
+        alert("Course updated successfully!");
+        // Update the course object and refresh display
+        Object.assign(course, updatedData);
+        displayCourseDetails(course);
+      } catch (error) {
+        console.error("Error updating course:", error);
+        alert(`Failed to update course: ${error.message}`);
+      }
+    }
+
+    async function deleteCourseFromView(course) {
+      const token = sessionStorage.getItem("access_token");
+      if (!token) {
+        alert("Please log in to delete courses");
+        return;
+      }
+
+      // Check if course has lessons
+      try {
+        const lessonsRes = await fetch(`${API_BASE}/lessons?course_id=${course.course_id}`, {
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (lessonsRes.ok) {
+          const lessonsData = await lessonsRes.json();
+          if (lessonsData.lessons && lessonsData.lessons.length > 0) {
+            alert("Cannot delete course. Please delete all lessons first.");
+            return;
+          }
+        }
+      } catch (error) {
+        console.error("Error checking lessons:", error);
+        alert("Error checking course dependencies");
+        return;
+      }
+
+      // Confirm deletion
+      if (!confirm(`Are you sure you want to delete course "${course.course_name}"?`)) {
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/courses/${course.course_id}`, {
+          method: "DELETE",
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || `HTTP error! status: ${res.status}`);
+        }
+
+        alert("Course deleted successfully!");
+        // Go back to course dashboard
+        loadContent('course_dashboard.html');
+      } catch (error) {
+        console.error("Error deleting course:", error);
+        alert(`Failed to delete course: ${error.message}`);
+      }
+    }
+
+    async function fetchLessonsForCourse(courseId) {
+      console.log("fetchLessonsForCourse called with courseId:", courseId);
+      const token = sessionStorage.getItem("access_token");
+      console.log("Token available:", !!token);
+      
+      if (!token) {
+        console.log("No token available, returning");
+        return;
+      }
+
+      try {
+        const url = `${API_BASE}/lessons?course_id=${courseId}`;
+        console.log("Making API call to:", url);
+        
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        console.log("API response status:", res.status);
+        
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log("API response data:", data);
+        const lessons = data.lessons || [];
+        console.log("Lessons array:", lessons);
+        
+        renderLessonsForCourse(lessons);
+      } catch (error) {
+        console.error("Error fetching lessons for course:", error);
+        const container = document.getElementById("course-lessons-container");
+        if (container) {
+          container.innerHTML = "<p>Failed to load lessons for this course.</p>";
+        }
+      }
+    }
+
+    function renderLessonsForCourse(lessons) {
+      console.log("renderLessonsForCourse called with:", lessons);
+      const container = document.getElementById("course-lessons-container");
+      console.log("Container element:", container);
+      
+      if (!container) {
+        console.error("Container #course-lessons-container not found!");
+        return;
+      }
+
+      if (lessons.length === 0) {
+        console.log("No lessons to render, showing empty message");
+        container.innerHTML = "<p>No lessons available for this course.</p>";
+        return;
+      }
+
+      console.log(`Rendering ${lessons.length} lessons`);
+      container.innerHTML = "";
+
+      lessons.forEach((lesson, index) => {
+        console.log(`Creating lesson box ${index + 1}:`, lesson);
+        const box = document.createElement("div");
+        box.className = "lesson-box";
+        box.style.cursor = "pointer";
+
+        const header = document.createElement("div");
+        header.className = "lesson-header";
+        header.innerHTML = `<span>${lesson.display_id || lesson.lesson_title}</span>`;
+
+        const title = document.createElement("div");
+        title.className = "lesson-title";
+        title.textContent = `Title: ${lesson.lesson_title}`;
+
+        const week = document.createElement("div");
+        week.className = "lesson-week";
+        week.textContent = `Week ${lesson.week_number || 'N/A'}`;
+
+        const description = document.createElement("div");
+        description.className = "lesson-description";
+        description.textContent = `Description: ${lesson.lesson_content ? 
+          (lesson.lesson_content.length > 100 ? 
+            lesson.lesson_content.substring(0, 100) + '...' : 
+            lesson.lesson_content) : 'No description available'}`;
+
+        box.appendChild(header);
+        box.appendChild(title);
+        box.appendChild(week);
+        box.appendChild(description);
+
+        box.addEventListener("click", () => {
+          sessionStorage.setItem("selected_lesson", JSON.stringify(lesson));
+          loadContent('lesson_view.html');
+        });
+
+        container.appendChild(box);
+      });
+      console.log("Finished rendering lessons");
+    }
+  </script>
+</body>
+</html>

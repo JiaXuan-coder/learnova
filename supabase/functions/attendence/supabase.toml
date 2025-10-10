@@ -1,0 +1,5 @@
+[project]
+name = "attendence"
+
+[functions.attendence]
+verify_jwt = false

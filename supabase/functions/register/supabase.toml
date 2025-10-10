@@ -1,0 +1,2 @@
+[functions.register]
+verify_jwt = false  # register is called by unauthenticated clients
