@@ -7,7 +7,7 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
 }
 
-const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
+const supabaseUrl = "https://ttisvmwrxnfbedrboizq.supabase.co"
 const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY') ?? ''
 const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 
@@ -266,3 +266,4 @@ async function updateAttendanceRecord(supabaseClient: any, req: Request, attenda
     )
   }
 }
+
