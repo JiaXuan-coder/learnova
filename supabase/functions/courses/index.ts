@@ -2,7 +2,7 @@
 import { serve } from "https://deno.land/std/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2?target=deno";
 
-const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+const supabaseUrl = "https://ttisvmwrxnfbedrboizq.supabase.co";
 const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY")!;
 const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
@@ -327,4 +327,5 @@ serve(async (req) => {
     console.error("Courses function error:", error);
     return json({ error: "INTERNAL_ERROR", details: error.message }, 500);
   }
+
 });
