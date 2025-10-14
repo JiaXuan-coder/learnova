@@ -6,7 +6,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
+const supabaseUrl = "https://ttisvmwrxnfbedrboizq.supabase.co"
 const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY') ?? ''
 const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 
@@ -317,3 +317,4 @@ async function getClassroomLessonsForStudent(supabaseClient: any, classroomId: s
     )
   }
 }
+
