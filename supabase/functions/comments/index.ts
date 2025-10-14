@@ -15,7 +15,7 @@ serve(async (req) => {
   try {
     // Create Supabase client
     const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
+      "https://ttisvmwrxnfbedrboizq.supabase.co",
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       {
         global: {
@@ -478,4 +478,5 @@ async function deleteComment(supabaseClient: any, commentId: string) {
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }
+
 }
