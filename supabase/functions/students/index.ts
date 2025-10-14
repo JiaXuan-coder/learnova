@@ -15,7 +15,7 @@ serve(async (req) => {
   try {
     // Create Supabase client
     const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
+      "https://ttisvmwrxnfbedrboizq.supabase.co",
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       {
         global: {
@@ -246,3 +246,4 @@ async function getSingleStudent(supabaseClient: any, studentId: string, userRole
     )
   }
 }
+
