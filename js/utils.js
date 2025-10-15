@@ -3,7 +3,7 @@
 // ---- config: using local Supabase for development ----
 // Use window variables to avoid redeclaration errors
 window.API_BASE = window.API_BASE || "http://127.0.0.1:54321/functions/v1";
-window.supabaseUrl = window.supabaseUrl || "http://127.0.0.1:54321";  
+window.supabaseUrl = window.supabaseUrl || "https://ttisvmwrxnfbedrboizq.supabase.co";  
 window.supabaseKey = window.supabaseKey || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0";                     
 
 // Create supabase client only if it doesn't exist
@@ -98,3 +98,4 @@ function initializePage() {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', initializePage);
+
