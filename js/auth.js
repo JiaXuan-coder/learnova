@@ -93,12 +93,13 @@ if (loginForm) {
       sessionStorage.setItem("access_token", data.access_token);
       console.log("Redirecting now...")
 
-      window.location.href = "sidebar_template.html";
+      window.location.href = "html/sidebar_template.html";
     } catch (err) {
       console.error(err);
       toast("Network error while logging in.", "error");
     }
   });
 }
+
 
 
