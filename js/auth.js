@@ -24,8 +24,7 @@ if (registerForm) {
       const res = await fetch(`${API_BASE}/register`, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseKey}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           email,
@@ -71,8 +70,7 @@ if (loginForm) {
       const res = await fetch(`${API_BASE}/login`, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseKey}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           email,
@@ -100,6 +98,7 @@ if (loginForm) {
     }
   });
 }
+
 
 
 
