@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2?target=deno";
 
 const supabaseUrl = "https://ttisvmwrxnfbedrboizq.supabase.co";
-const supabaseKey = Deno.env.get("PUBLIC_ANON_KEY")!;
+const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -54,6 +54,7 @@ serve(async (req) => {
     headers: { "Content-Type": res.headers.get("Content-Type") ?? "application/json", ...corsHeaders },
   });
 });
+
 
 
 
